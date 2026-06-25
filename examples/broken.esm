@@ -1,0 +1,48 @@
+// Deliberately broken: exercises every check in Check.rsc so we can verify
+// each one actually fires. Not a realistic machine, not meant to run.
+machine Broken {
+
+  var counter: int = true
+  var flag: bool = 0
+
+  event tick(n: int)
+  event go()
+  event leave()
+  event ping()
+
+  state Init1 initial {
+    on tick(n) when n > 0 -> B do {
+      counter := n;
+    }
+  }
+
+  state Init2 initial {
+    on go() -> B
+  }
+
+  state B {
+    on go() -> B
+    on go() -> Dead
+    on tick(n) when counter -> B
+    on tick(n) when n > 0 -> B do {
+      counter := flag;
+    }
+    on ghost(n) -> B
+    on leave() -> Nowhere
+    on tick(n) when n > 0 -> B do {
+      n := 5;
+    }
+    on tick() -> B
+    on ping() when nonexistentVar -> B
+    on ping() -> B do {
+      ghostVar := 5;
+    }
+  }
+
+  state Dead {
+  }
+
+  state Lonely {
+    on go() -> B
+  }
+}
