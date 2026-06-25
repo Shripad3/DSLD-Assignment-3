@@ -1,0 +1,7 @@
+Manifest-Version: 0.0.1
+Source: src
+Main-Module: esm::Plugin
+Main-Function: main
+Project-Name: ESM
+Require-Libraries:
+

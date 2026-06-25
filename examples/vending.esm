@@ -1,0 +1,51 @@
+// A drinks vending machine: insert coins, select a drink once enough
+// balance is collected, or cancel to get a refund.
+machine VendingMachine {
+
+  var balance: int = 0
+  var price: int = 75
+  var dispensed: bool = false
+  var returnCoins: int = 0
+
+  event coin(value: int)
+  event select()
+  event cancel()
+
+  state Idle initial {
+    entry {
+      balance := 0;
+      dispensed := false;
+      returnCoins := 0;
+    }
+    on coin(value) when value > 0 -> Collecting do {
+      balance := balance + value;
+    }
+  }
+
+  state Collecting {
+    on coin(value) when value > 0 -> Collecting do {
+      balance := balance + value;
+    }
+    on select() when balance >= price && !dispensed -> Dispensing
+    on select() when balance < price -> Collecting
+    on cancel() when balance > 0 || dispensed -> Refunding
+  }
+
+  state Dispensing {
+    entry {
+      dispensed := true;
+    }
+    exit {
+      returnCoins := (balance - price) / 5;
+      balance := balance - price;
+    }
+    on select() when true -> Idle
+  }
+
+  state Refunding final {
+    entry {
+      returnCoins := returnCoins + balance / 5;
+      balance := balance - (balance / 5) * 5;
+    }
+  }
+}
