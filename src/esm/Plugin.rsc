@@ -58,11 +58,19 @@ bool compileFile(loc src) {
 
 // Compile every realistic example into Python, and run the checker over the
 // deliberately broken machine to demonstrate the static semantics.
+//
+// Example locations are resolved with the `cwd://` scheme, i.e. relative to
+// the directory the Rascal REPL was started in (the project root). This is
+// deliberately independent of the project's folder *name*: `project://<name>`
+// resolves by the workspace folder name in some Rascal versions, so it breaks
+// if the folder is renamed (or unzipped under a different name). `cwd://`
+// always points at the opened project root, so `main()` works for anyone.
 void main() {
+  loc examplesDir = |cwd:///examples|;
   examples = [
-    |project://esm/examples/vending.esm|,
-    |project://esm/examples/trafficlight.esm|,
-    |project://esm/examples/elevator.esm|
+    examplesDir + "vending.esm",
+    examplesDir + "trafficlight.esm",
+    examplesDir + "elevator.esm"
   ];
   for (ex <- examples) {
     compileFile(ex);
@@ -70,5 +78,5 @@ void main() {
   }
 
   println("### Static-semantics demo (errors below are intentional) ###");
-  checkFile(|project://esm/examples/broken.esm|);
+  checkFile(examplesDir + "broken.esm");
 }
