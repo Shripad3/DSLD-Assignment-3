@@ -171,7 +171,10 @@ AExpr toExpr(Expr e) {
     case (Expr)`<Expr l> \<= <Expr r>`: return leq(toExpr(l), toExpr(r))[src=e@\loc];
     case (Expr)`<Expr l> \> <Expr r>`: return gt(toExpr(l), toExpr(r))[src=e@\loc];
     case (Expr)`<Expr l> \>= <Expr r>`: return geq(toExpr(l), toExpr(r))[src=e@\loc];
-    case (Expr)`<Expr l> == <Expr r>`: return eq(toExpr(l), toExpr(r))[src=e@\loc];
+    // The bare name `eq` resolves to a built-in structural-equality function
+    // (bool eq(value, value)) that shadows our constructor in construction
+    // position, so we qualify it. (`neq` has no such clash.)
+    case (Expr)`<Expr l> == <Expr r>`: return esm::AST::eq(toExpr(l), toExpr(r))[src=e@\loc];
     case (Expr)`<Expr l> != <Expr r>`: return neq(toExpr(l), toExpr(r))[src=e@\loc];
     case (Expr)`<Expr l> && <Expr r>`: return and(toExpr(l), toExpr(r))[src=e@\loc];
     case (Expr)`<Expr l> || <Expr r>`: return or(toExpr(l), toExpr(r))[src=e@\loc];

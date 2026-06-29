@@ -1,0 +1,54 @@
+// A single-car elevator. A request(dest) picks a direction; each step() moves
+// the car one floor until it reaches the target, then opens the doors.
+// Demonstrates a parameterized event (dest: int), arithmetic on extended
+// state (floor +/- 1), and three guarded transitions on one event from the
+// same state (deterministic by mutually exclusive guards).
+machine Elevator {
+
+  var floor: int = 0
+  var target: int = 0
+  var doorOpen: bool = false
+
+  event request(dest: int)
+  event step()
+
+  state Idle initial {
+    entry {
+      doorOpen := false;
+    }
+    on request(dest) when dest > floor -> MovingUp do {
+      target := dest;
+    }
+    on request(dest) when dest < floor -> MovingDown do {
+      target := dest;
+    }
+    on request(dest) when dest == floor -> DoorOpen
+  }
+
+  state MovingUp {
+    on step() when floor < target -> MovingUp do {
+      floor := floor + 1;
+    }
+    on step() when floor == target -> DoorOpen
+  }
+
+  state MovingDown {
+    on step() when floor > target -> MovingDown do {
+      floor := floor - 1;
+    }
+    on step() when floor == target -> DoorOpen
+  }
+
+  state DoorOpen {
+    entry {
+      doorOpen := true;
+    }
+    on request(dest) when dest > floor -> MovingUp do {
+      target := dest;
+    }
+    on request(dest) when dest < floor -> MovingDown do {
+      target := dest;
+    }
+    on request(dest) when dest == floor -> DoorOpen
+  }
+}
