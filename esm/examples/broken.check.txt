@@ -1,0 +1,17 @@
+  ERROR |cwd:///examples/broken.esm|(193,18,<6,2>,<6,20>): Initial value of 'flag' has type int, expected bool
+  WARN  |cwd:///examples/broken.esm|(802,35,<45,2>,<47,3>): State 'Lonely' is unreachable from the initial state
+  ERROR |cwd:///examples/broken.esm|(782,16,<42,2>,<43,3>): State 'Dead' has no outgoing transitions (dead end)
+  ERROR |cwd:///examples/broken.esm|(167,23,<5,2>,<5,25>): Initial value of 'counter' has type bool, expected int
+  ERROR |cwd:///examples/broken.esm|(652,7,<33,6>,<33,13>): Cannot assign to event parameter 'n'; only declared variables can be assigned
+  ERROR |cwd:///examples/broken.esm|(540,16,<28,6>,<28,22>): Cannot assign bool to 'counter' of type int
+  ERROR |cwd:///examples/broken.esm|(372,42,<19,2>,<21,3>): Multiple initial states declared; 'Init2' is one of them
+  ERROR |cwd:///examples/broken.esm|(670,19,<35,4>,<36,4>): Event 'tick' expects 1 parameter(s), got 0
+  ERROR |cwd:///examples/broken.esm|(754,14,<38,6>,<38,20>): Undefined variable 'ghostVar' (assignment target)
+  ERROR |cwd:///examples/broken.esm|(728,46,<37,4>,<39,5>): Transitions on event 'ping' from state 'B' are not (conservatively) deterministic: an unguarded transition coexists with another
+  ERROR |cwd:///examples/broken.esm|(588,26,<31,4>,<32,4>): Undefined target state 'Nowhere'
+  ERROR |cwd:///examples/broken.esm|(670,19,<35,4>,<36,4>): Transitions on event 'tick' from state 'B' are not (conservatively) deterministic: an unguarded transition coexists with another
+  ERROR |cwd:///examples/broken.esm|(281,87,<13,2>,<17,3>): Multiple initial states declared; 'Init1' is one of them
+  ERROR |cwd:///examples/broken.esm|(485,7,<26,20>,<26,27>): Guard must be bool, got int
+  ERROR |cwd:///examples/broken.esm|(567,21,<30,4>,<31,4>): Undefined event 'ghost'
+  ERROR |cwd:///examples/broken.esm|(704,14,<36,19>,<36,33>): Undefined reference 'nonexistentVar'
+  ERROR |cwd:///examples/broken.esm|(432,17,<24,4>,<25,4>): Transitions on event 'go' from state 'B' are not (conservatively) deterministic: an unguarded transition coexists with another

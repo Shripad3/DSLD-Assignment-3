@@ -1,2 +1,7 @@
 target/
 .DS_Store
+Guest Lectures/
+
+# Reports are submitted in the Canvas zip, not tracked in the repo
+*.pdf
+report/
